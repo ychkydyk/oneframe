@@ -1,0 +1,107 @@
+/* ════════════════════════════════════════════════════════════════
+   ONE FRAME — доска для тех, кто делает то, что смотрят и слушают.
+   Плёночная кромка вместо украшений: перфорация, кадровые рамки,
+   моноширинные числа. Ни одного внешнего запроса, шрифты системные.
+   ════════════════════════════════════════════════════════════════ */
+:root{
+  --film:#0b0c0e;         /* плёнка */
+  --film-2:#131518;
+  --frame:#1c2024;        /* кромка кадра */
+  --paper:#f2f2ef;        /* свет */
+  --dim:#9aa0a6;
+  --dim-2:#6b7278;
+  --lead:#e8b54a;         /* ракорд, единственный акцент */
+  --lead-dk:#3a2f16;
+  --ok:#8fc79a;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,"DejaVu Sans Mono",monospace;
+  --sans:"Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--film)}
+html,body{margin:0}
+body{
+  background:var(--film);color:var(--paper);
+  font-family:var(--sans);font-size:15.5px;line-height:1.6;
+  padding-inline:18px;padding-block:0 64px;
+}
+.wrap{max-width:860px;margin-inline:auto}
+
+/* ─── шапка с перфорацией, как у плёнки ─── */
+.top{
+  max-width:860px;margin-inline:auto;
+  display:flex;flex-wrap:wrap;gap:18px 28px;align-items:flex-end;
+  padding-block:34px 20px;border-bottom:1px solid var(--frame);
+}
+.brand{position:relative;padding-top:16px}
+.perf{
+  position:absolute;top:0;left:0;right:-40px;height:9px;
+  background:repeating-linear-gradient(90deg,var(--frame) 0 9px,transparent 9px 20px);
+}
+h1{margin:0;font:700 27px/1.05 var(--mono);letter-spacing:.14em}
+.sub{margin:5px 0 0;color:var(--dim);font-size:13.5px}
+.ways{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+.ways a{
+  color:var(--paper);text-decoration:none;font-size:13px;
+  border:1px solid var(--frame);padding:7px 12px;background:var(--film-2);
+}
+.ways a:hover{border-color:var(--lead);color:var(--lead)}
+.ways a:focus-visible{outline:2px solid var(--lead);outline-offset:2px}
+
+.lede{padding-block:24px 8px;max-width:64ch}
+.lede p{margin:0 0 10px}
+.lede b{color:var(--lead)}
+.muted{color:var(--dim);font-size:14px}
+
+/* ─── рубрики ─── */
+.filters{display:flex;flex-wrap:wrap;gap:6px;padding-block:14px 20px;
+         border-bottom:1px solid var(--frame)}
+.chip{
+  font:13px var(--sans);color:var(--dim);background:transparent;
+  border:1px solid var(--frame);padding:6px 12px;cursor:pointer;
+}
+.chip:hover{color:var(--paper);border-color:var(--dim-2)}
+.chip.on{background:var(--lead);border-color:var(--lead);color:#17130a;font-weight:600}
+.chip:focus-visible{outline:2px solid var(--lead);outline-offset:2px}
+
+.state{padding-block:22px;color:var(--dim);font:13px var(--mono)}
+.state.err{color:var(--lead)}
+
+/* ─── лента кадров ─── */
+.feed{display:grid;gap:2px;background:var(--frame);border:1px solid var(--frame)}
+.post{background:var(--film-2);padding:18px 20px 20px;display:grid;gap:9px}
+.post:hover{background:#171a1e}
+.head{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.head h2{margin:0;font-size:16.5px;line-height:1.35;font-weight:600;flex:1 1 320px}
+.head h2 a{color:var(--paper);text-decoration:none}
+.head h2 a:hover{color:var(--lead)}
+.tag{
+  font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--lead);color:var(--lead);padding:2px 7px;
+}
+.tag.other{border-color:var(--dim-2);color:var(--dim)}
+.by{font:12px var(--mono);color:var(--dim-2)}
+.by b{color:var(--dim);font-weight:400}
+
+.body{
+  font:13.5px/1.6 var(--mono);color:#d7dade;white-space:pre-wrap;word-break:break-word;
+  border-left:2px solid var(--frame);padding-left:14px;max-height:20em;overflow:hidden;
+  position:relative;
+}
+.body.cut::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:4em;
+  background:linear-gradient(180deg,transparent,var(--film-2));
+}
+.more{font:12px var(--mono);color:var(--lead);background:none;border:0;padding:0;cursor:pointer;justify-self:start}
+.more:focus-visible{outline:2px solid var(--lead);outline-offset:2px}
+
+.bot{
+  max-width:860px;margin:36px auto 0;padding-top:16px;border-top:1px solid var(--frame);
+  display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;
+  font:12px var(--mono);color:var(--dim-2);
+}
+
+@media(max-width:560px){
+  h1{font-size:22px}
+  .ways{margin-left:0}
+  .body{font-size:12.5px}
+}
