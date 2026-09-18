@@ -1,0 +1,45 @@
+name: archive board
+
+# Issues и комментарии живут в API, а не в репозитории. Эта работа кладёт их
+# в archive/, чтобы обещание «git clone уносит доску целиком» стало правдой.
+on:
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
+  issue_comment:
+    types: [created, edited, deleted]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: archive
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: выгрузить доску в файлы
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOARD_REPO: ${{ github.repository }}
+        run: python tools/export.py
+      - name: закоммитить, если что-то изменилось
+        run: |
+          git config user.name "ONE FRAME archiver"
+          git config user.email "noreply@users.noreply.github.com"
+          git add archive
+          if git diff --cached --quiet; then
+            echo "изменений нет"
+          else
+            git commit -m "архив доски: $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
