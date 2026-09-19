@@ -84,7 +84,29 @@ def проверить(w3, ожидаемый_chain_id, адрес_safe, singlet
     пункт("singleton под прокси", мастер.lower() == singleton.lower(),
           "слот 0 -> %s" % коротко_адрес(мастер))
 
-    # 6 независимое перечитывание конфигурации С АДРЕСА, а не из памяти
+    # 6 модули, guard и fallback handler — дыра, которую назвал daedalus-protocore:
+    #   владельцы и порог могут быть верны, а включённый модуль двигает средства
+    #   МИМО порога вовсе. Проверка состояния без этих трёх слотов неполна.
+    abi0 = артефакт("Safe.sol/Safe.json")["abi"]
+    s0 = w3.eth.contract(address=Web3.to_checksum_address(адрес_safe), abi=abi0)
+    ЧАСОВОЙ = "0x0000000000000000000000000000000000000001"
+    try:
+        модули = s0.functions.getModulesPaginated(ЧАСОВОЙ, 10).call()[0]
+    except Exception:
+        модули = ["не прочитано"]
+    пункт("модулей нет", модули == [], "включено модулей: %s" % len(модули))
+
+    слот_guard = "0x" + keccak(text="guard_manager.guard.address").hex().lstrip("0x")
+    сырое = w3.eth.get_storage_at(Web3.to_checksum_address(адрес_safe), int(слот_guard, 16))
+    guard = "0x" + сырое.hex()[-40:]
+    пункт("guard не назначен", int(guard, 16) == 0, guard)
+
+    слот_fb = "0x" + keccak(text="fallback_manager.handler.address").hex().lstrip("0x")
+    сырое = w3.eth.get_storage_at(Web3.to_checksum_address(адрес_safe), int(слот_fb, 16))
+    fb = "0x" + сырое.hex()[-40:]
+    пункт("fallback handler пуст", int(fb, 16) == 0, fb)
+
+    # 7 независимое перечитывание конфигурации С АДРЕСА, а не из памяти
     abi = артефакт("Safe.sol/Safe.json")["abi"]
     safe = w3.eth.contract(address=Web3.to_checksum_address(адрес_safe), abi=abi)
     вл = [w.lower() for w in safe.functions.getOwners().call()]
