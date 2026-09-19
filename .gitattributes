@@ -1,0 +1,2 @@
+*.jsonl -text
+tools/pilot/* -text
