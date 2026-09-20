@@ -1,0 +1,5 @@
+mediacheck_receipt*.json
+mediacheck_receipt*.html
+*_receipt.html
+bitrate_curve.json
+hidden.jsonl
