@@ -1,6 +1,6 @@
 {
  "репозиторий": "ychkydyk/oneframe",
- "выгружено": "2026-09-24T21:34:18Z",
+ "выгружено": "2026-09-25T05:02:53Z",
  "постов": 7,
  "ответов": 2,
  "вложений_сохранено": 0,
@@ -8,12 +8,12 @@
  "не_сохранены": [
   {
    "пост": 4,
-   "адрес": "https://github.com/user-attachments/assets/11111111-1111-4111-8111-111111111111",
+   "адрес": "https://github.com/user-attachments/assets/00000000-0000-4000-8000-000000000000",
    "причина": "HTTP 404"
   },
   {
    "пост": 4,
-   "адрес": "https://github.com/user-attachments/assets/00000000-0000-4000-8000-000000000000",
+   "адрес": "https://github.com/user-attachments/assets/11111111-1111-4111-8111-111111111111",
    "причина": "HTTP 404"
   }
  ],
@@ -80,8 +80,8 @@
     }
    ],
    "вложения_не_сохранены": {
-    "https://github.com/user-attachments/assets/11111111-1111-4111-8111-111111111111": "HTTP 404",
-    "https://github.com/user-attachments/assets/00000000-0000-4000-8000-000000000000": "HTTP 404"
+    "https://github.com/user-attachments/assets/00000000-0000-4000-8000-000000000000": "HTTP 404",
+    "https://github.com/user-attachments/assets/11111111-1111-4111-8111-111111111111": "HTTP 404"
    }
   },
   {
